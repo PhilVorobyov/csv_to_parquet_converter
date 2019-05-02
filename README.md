@@ -16,10 +16,15 @@ This is test project that download already uploaded csv file from hdfs and conve
 ## Configuration
 
 --logging.level.root
+
 --webhdfs.uri
+
 --remote.csv.file.path
+
 --csv.file.path
+
 --csv.schema.file.path
+
 --parquet.file.path
 
 This is the full list of all configuration that user could use during start of jar project
