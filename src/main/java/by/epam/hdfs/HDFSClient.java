@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 
@@ -29,8 +30,12 @@ public class HDFSClient {
 
 
   public void downloadFileFromHDFS() {
-    FileSystem fileSystem = getFileSystem();
-    downloadRequiredFile(fileSystem);
+    if (!new File(localCsvPath).exists()) {
+      FileSystem fileSystem = getFileSystem();
+      downloadRequiredFile(fileSystem);
+    } else {
+      LOG.info("csv file is already downloaded");
+    }
   }
 
   private FileSystem getFileSystem() {

@@ -33,20 +33,25 @@ public class CsvConverter {
   private String parquetFilePath;
 
   public void convertCsvToParquet() {
-    String schema = getSchema();
-    MessageType messageType = MessageTypeParser.parseMessageType(schema);
-    WriteSupport<List<String>> writeSupport = new CsvWriteSupport(messageType);
-    try (BufferedReader br = new BufferedReader(new FileReader(new File(csvFilePath)))) {
-      LOG.debug("start converting csv + " + csvFilePath + "to parquet file " + parquetFilePath);
-      String line = br.readLine();
-      CsvParquetWriter writer = new CsvParquetWriter(new Path(parquetFilePath), writeSupport);
-      while ((line = br.readLine()) != null) {
-        String[] fields = line.split(Pattern.quote(","));
-        writer.write(Arrays.asList(fields));
+    if (!new File(parquetFilePath).exists()) {
+      String schema = getSchema();
+      MessageType messageType = MessageTypeParser.parseMessageType(schema);
+      WriteSupport<List<String>> writeSupport = new CsvWriteSupport(messageType);
+      try (BufferedReader br = new BufferedReader(new FileReader(new File(csvFilePath)))) {
+        LOG.debug("start converting csv + " + csvFilePath + "to parquet file " + parquetFilePath);
+        String line = br.readLine();
+        CsvParquetWriter writer = new CsvParquetWriter(new Path(parquetFilePath), writeSupport);
+
+        while ((line = br.readLine()) != null) {
+          String[] fields = line.split(Pattern.quote(","));
+          writer.write(Arrays.asList(fields));
+        }
+        writer.close();
+      } catch (IOException e) {
+        LOG.error("Failed to write parquet file: " + e.getMessage(), e);
       }
-      writer.close();
-    } catch (IOException e) {
-      LOG.error("Failed to write parquet file: " + e.getMessage(), e);
+    } else {
+      LOG.info("parquet file is already converted from csv");
     }
   }
 
