@@ -4,30 +4,26 @@ This is test project that download already uploaded csv file from hdfs and conve
 
 ## Getting started
 
+Download destinations.csv from https://www.kaggle.com/c/expedia-hotel-recommendations/data 
+and put to output_data after that start .sh script to upload csv file to hdfs and convert to parquet
 
-```shell
-
-```
 
 ### Building
 
-```shell
+bulding using maven 
 
+```shell
+mvn package
 ```
 
 ## Configuration
 
---logging.level.root
-
---webhdfs.uri
-
---remote.csv.file.path
-
---csv.file.path
-
---csv.schema.file.path
-
---parquet.file.path
+* --logging.level.root 
+* --webhdfs.uri
+* --remote.csv.file.path
+* --csv.file.path
+* --csv.schema.file.path
+* --parquet.file.path
 
 This is the full list of all configuration that user could use during start of jar project
 
@@ -66,7 +62,7 @@ java -jar hdfs.jar --remote.csv.file.path={your_remote_csv_file_path}
 
 #### csv.file.path
 Type: `String`  
-Default: `'/Users/philipvorobyov/devei/workspace/hdfs/src/hdfs/input_data/destinations.csv'`
+Default: `'src/hdfs/output_data/destinations.csv'`
 
 Local csv file location
 
@@ -77,7 +73,7 @@ java -jar hdfs.jar --csv.file.path={local_csv_file_location}
 
 #### csv.schema.file.path
 Type: `String`  
-Default: `'/Users/philipvorobyov/devei/workspace/hdfs/src/hdfs/input_data/destinations.schema'`
+Default: `'src/hdfs/input_data/destinations.schema'`
 
 use requred csv file schema
 
@@ -88,7 +84,7 @@ java -jar hdfs.jar --csv.schema.file.path={csv_schema_local_path}
 
 #### parquet.file.path
 Type: `String`  
-Default: `'/Users/philipvorobyov/devei/workspace/hdfs/src/hdfs/output_data/dest.parquet'`
+Default: `'src/hdfs/input_data/dest.parquet'`
 
 path of final parquet file 
 
